@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div>
+			<div class="mb-5">
+				<h1>Bienvenue sur la plateforme d'assistance informatique du Parc Impérial</h1>
+			</div>
+
+
+			<p>Cette plateforme ne gère que les problèmes informatiques.</p>
+
+			<hr>
+
+			<p>
+				<b>Veuillez vous connecter :</b>
+			</p>
+
+
+			{% if error %}
+				<div class="alert alert-danger">
+					{{error.message}}
+				</div>
+			{% endif %}
+
+			{{ form_start(formView) }}
+
+			<div class="row">
+				<div class="col-md-6">
+					<form>
+						<div class="mb-3">
+							{{form_widget(formView)}}
+							{# {{form_row(formView.email, {'attr': {'value': lastMail}})}}
+																																																															{{form_row(formView.password)}} #}
+							<div class="text-end">
+								<a href="#">Mot de passe oublier?</a>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary">Connexion</button>
+						<div class="text-center mt-3">
+							<p>Vous n'avez pas de compte?
+								<a href="{{path('app_register')}}">Inscrivez-vous</a>
+							</p>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			{{ form_end(formView) }}
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'enregistré
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div>
+			<div class="mb-5">
+				<h1>Inscription à la plateforme</h1>
+			</div>
+
+
+			<p>Veuillez remplir le formulaire ci-dessous :</p>
+
+
+			{{ form_start(formView) }}
+
+			<div class="row">
+				<div class="col-md-6 pb-5">
+					<form>
+						<div class="mb-3">
+							{{form_widget(formView)}}
+						</div>
+						<button type="submit" class="btn btn-primary">Inscription</button>
+					</form>
+				</div>
+			</div>
+
+			{{ form_end(formView) }}
+
+			<a href="{{path('app_security_login')}}">Retour à l'accueil</a>
+
+		</div>
+	</div>
+
+
+{% endblock %}

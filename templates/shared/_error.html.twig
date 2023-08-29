@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur
+	{{ exception.statusCode}}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div>
+			<div class="mb-5">
+				<h1>HTTP Error
+					{{ exception.statusCode}}</h1>
+			</div>
+
+
+			<p>{{exception.statusText}}</p>
+
+			<a href="{{path('app_security_login')}}">Retour à l'accueil</a>
+
+		</div>
+	</div>
+{% endblock %}

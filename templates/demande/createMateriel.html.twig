@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demande Materiel
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div>
+			<div class="mb-5">
+				<h1>Votre demande de type matériel et logiciel</h1>
+			</div>
+
+			<p>Avant de crée votre demande veuillez vérifier si elle n'existe pas déja :</p>
+
+			<a href="{{path('app_account_verif_demande_materiel')}}" class="btn btn-primary mb-3">Vérifier les demandes</a>
+
+
+			<p>Veuillez remplir le formulaire ci-dessous :</p>
+
+
+			{{ form_start(formView) }}
+
+			<div class="row">
+				<div class="col-md-6 pb-5">
+					<form>
+						<div class="mb-3">
+							{{form_widget(formView)}}
+						</div>
+						<button type="submit" class="btn btn-primary">Soumettre la demande</button>
+					</form>
+				</div>
+			</div>
+
+			{{ form_end(formView) }}
+
+			<a href="{{path('app_account')}}">Retour sur votre compte</a>
+
+		</div>
+	</div>
+{% endblock %}
