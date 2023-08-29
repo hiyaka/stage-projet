@@ -57,24 +57,24 @@ class AppFixtures extends Fixture
         //     $manager->persist($demandes);
         // }
 
-        /// création d'un admin
-        // $admin = new User;
-        // $hash = $this->passwordHasher->hashPassword($admin, "password");
-        // $admin->setEmail("cdtximperial@gmail.com")->setPassword($hash)->setFirstName("Christelle")->setLastName("Audoly")->setRoles(['ROLE_ADMIN']);
-        // $manager->persist($admin);
+        // création d'un admin
+        $admin = new User;
+        $hash = $this->passwordHasher->hashPassword($admin, "password");
+        $admin->setEmail("cdtximperial@gmail.com")->setPassword($hash)->setFirstName("Christelle")->setLastName("Audoly")->setRoles(['ROLE_ADMIN']);
+        $manager->persist($admin);
 
-        // /// boucle pour crée 5 users
-        // for ($u = 0; $u < 5; $u++) {
-        //     $user = new User();
-        //     $hash = $this->passwordHasher->hashPassword($user, "password");
-        //     $email = $faker->userName . '@ac-nice.fr';
-        //     $user->setEmail($email)
-        //         ->setFirstName($faker->firstName())
-        //         ->setLastName($faker->lastName())
-        //         ->setPassword($hash);
+        /// boucle pour crée 5 users
+        for ($u = 0; $u < 5; $u++) {
+            $user = new User();
+            $hash = $this->passwordHasher->hashPassword($user, "password");
+            $email = $faker->userName . '@ac-nice.fr';
+            $user->setEmail($email)
+                ->setFirstName($faker->firstName())
+                ->setLastName($faker->lastName())
+                ->setPassword($hash);
 
-        //     $manager->persist($user);
-        // }
+            $manager->persist($user);
+        }
 
         $manager->flush();
     }

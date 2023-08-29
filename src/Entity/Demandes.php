@@ -32,6 +32,9 @@ class Demandes
     #[Assert\NotBlank(message: "Veuillez sélectioner une salle", groups: ['with-demandes-salles'])]
     private ?Salles $salles = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $rapport = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,6 +84,18 @@ class Demandes
     public function setSalles(?Salles $salles): static
     {
         $this->salles = $salles;
+
+        return $this;
+    }
+
+    public function getRapport(): ?string
+    {
+        return $this->rapport;
+    }
+
+    public function setRapport(?string $rapport): static
+    {
+        $this->rapport = $rapport;
 
         return $this;
     }

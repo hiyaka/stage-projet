@@ -43,36 +43,45 @@
 				</div>
 			</div>
 
-			<p class="lead">
-				Vos dernieres demandes :
-			</p>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th scope="col">Salle</th>
-						<th scope="col">Description</th>
-						<th scope="col">Type de demande</th>
+			<p class="lead fw-bold text-decoration-underline">
+				Vos dernieres demandes :</p>
+		</p>
 
-					</tr>
-				</thead>
-				<tbody>
-					{% for d in demandes %}
-						<tr class="table-active">
-							<th scope="row">
-								{% if d.category.name == 'materiel' %}
-									{{ d.salles is not null ? d.salles.name : 'Salle non spécifiée' }}
-								{% endif %}
-							</th>
-							<td>{{ d.description }}</td>
-							<td>{{ d.category.name }}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-
+		<div class="count badge bg-info">
+			Vous avez
+			{{ demandes.getTotalItemCount }}
+			demandes au total.
 		</div>
 
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Salle</th>
+					<th scope="col">Description</th>
+					<th scope="col">Rapport</th>
+					<th scope="col">Type de demande</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				{% for d in demandes %}
+					<tr class="table-active">
+						<th scope="row">
+							{% if d.category.name == 'materiel' %}
+								{{ d.salles is not null ? d.salles.name : 'Salle non spécifiée' }}
+							{% endif %}
+						</th>
+						<td>{{ d.description }}</td>
+						<td>{{ d.rapport }}</td>
+						<td>{{ d.category.name }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<div class="navigation d-flex justify-content-center">
+			{{ knp_pagination_render(demandes) }}
+		</div>
 
 	</div>
-
-{% endblock %}
+</div>{% endblock %}
