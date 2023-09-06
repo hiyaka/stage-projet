@@ -40,7 +40,7 @@ class RegisterType extends AbstractType
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'attr' => [
-                    'placeholder' => 'Le mot de passe doit contenir 8 caractères dont une majuscule'
+                    'placeholder' => 'Le mot de passe doit contenir au moins 8 caractères dont une majuscule'
                 ],
                 'required' => false,
             ])

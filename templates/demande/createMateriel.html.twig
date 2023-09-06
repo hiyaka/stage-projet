@@ -10,11 +10,6 @@
 				<h1>Votre demande de type matériel et logiciel</h1>
 			</div>
 
-			<p>Avant de crée votre demande veuillez vérifier si elle n'existe pas déja :</p>
-
-			<a href="{{path('app_account_verif_demande_materiel')}}" class="btn btn-primary mb-3">Vérifier les demandes</a>
-
-
 			<p>Veuillez remplir le formulaire ci-dessous :</p>
 
 
@@ -29,8 +24,36 @@
 						<button type="submit" class="btn btn-primary">Soumettre la demande</button>
 					</form>
 				</div>
-			</div>
 
+
+				<div class="col-md-6">
+					{% if historiqueDemandes is not empty %}
+						<h2>Historiques des demandes de la salle
+							{{selectSalle.name}}</h2>
+
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th scope="col">Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for d in historiqueDemandes %}
+									<tr class="table-active">
+										<td>{{ d.description }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+						{# <div class="navigation">
+																											{{ knp_pagination_render(historiqueDemandes) }}
+																											</div> #}
+					{% else %}
+						<p>Aucune demande trouvée</p>
+					{% endif %}
+
+				</div>
+			</div>
 			{{ form_end(formView) }}
 
 			<a href="{{path('app_account')}}">Retour sur votre compte</a>

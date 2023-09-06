@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DemandesRepository;
+use DateTimeImmutable;
 use Symfony\Component\Validator\Constraints as Assert; // Use rajouté par moi meme
 
 #[ORM\Entity(repositoryClass: DemandesRepository::class)]
@@ -34,6 +35,23 @@ class Demandes
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $rapport = null;
+
+    #[ORM\Column()]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'demandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Statut $statut = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    // public function __toString()
+    // {
+    //     return $this->category;
+    // }
 
     public function getId(): ?int
     {
@@ -96,6 +114,30 @@ class Demandes
     public function setRapport(?string $rapport): static
     {
         $this->rapport = $rapport;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getStatut(): ?Statut
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(?Statut $statut): static
+    {
+        $this->statut = $statut;
 
         return $this;
     }

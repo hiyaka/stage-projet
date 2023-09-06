@@ -10,8 +10,9 @@ use App\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class MaterielType extends AbstractType
 {
@@ -29,6 +30,16 @@ class MaterielType extends AbstractType
                 'choice_label' => 'name',
 
             ])
+            // ->add('createdAt', DateType::class, [
+            //     'label' => 'Date de la demande :',
+            //     'placeholder' => [
+            //         'year' => 'Année',
+            //         'month' => 'Mois',
+            //         'day' => 'Jour',
+            //     ],
+            //     'widget' => 'choice',
+            //     'input'  => 'datetime_immutable'
+            // ])
             // ->add('user')
             ->add('salles', EntityType::class, [
                 'label' => 'La salle :',
@@ -36,6 +47,10 @@ class MaterielType extends AbstractType
                 'class' => Salles::class,
                 'choice_label' => 'name',
                 'required' => false,
+                'attr' => [
+                    // 'class' => 'form-control',
+                    'onchange' => "this.closest('form').submit()"
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Votre demande :',
@@ -43,7 +58,6 @@ class MaterielType extends AbstractType
                     // 'class' => 'form-control',
                     'placeholder' => 'Tapez votre demande ici'
                 ],
-                'required' => false,
             ]);
     }
 

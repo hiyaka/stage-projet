@@ -5,49 +5,64 @@
 
 {% block body %}
 
-	<a href="{{path('app_security_logout')}}" class="btn btn-danger">Me déconnecter</a>
 
-	<div class="account-view">
-		<div class="container">
-			<h1 class="display-4 text-center">Bienvenue sur votre compte</h1>
-			<p class="lead text-center">Bonjour,
-				{{app.user.firstName}}
-				votre demande concerne :</p>
+	<div class="row">
 
-			<div class="row mt-5 mb-5">
-				<div class="col-md-4 d-flex justify-content-center align-items-center">
-					<a href="{{path('app_account_demande_materiel')}}">
-						<div class="rounded-circle overflow-hidden border border-dark" style="width: 200px; height: 200px;">
-							<img src="{{asset('images/materiel.jpg')}}" alt="Image ordinateur" class="w-100 h-100">
-						</div>
-						<h6 class="text-center mt-3">Materiel/logiciel</h6>
-					</a>
-				</div>
+		<div class="col">
+			<a href="{{path('app_security_logout')}}" class="btn btn-danger">Me déconnecter</a>
+		</div>
 
-				<div class="col-md-4 d-flex justify-content-center align-items-center">
-					<a href="{{path('app_account_demande_atrium')}}">
-						<div class="rounded-circle overflow-hidden border" style="width: 200px; height: 200px;">
-							<img src="{{asset('images/atrium.jpg')}}" alt="Image logo Atrium" class="w-100 h-100">
-						</div>
-						<h6 class="text-center mt-3">Atrium</h6>
-					</a>
-				</div>
-
-				<div class="col-md-4 d-flex justify-content-center align-items-center">
-					<a href="{{path('app_account_demande_autres')}}">
-						<div class="rounded-circle overflow-hidden border border-dark" style="width: 200px; height: 200px;">
-							<img src="{{asset('images/autres.jpg')}}" alt="Image autres" class="w-100 h-100">
-						</div>
-						<h6 class="text-center mt-3">Autres</h6>
-					</a>
-				</div>
+		<div class="col-md-6">
+			<div class="d-flex flex-row-reverse">
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{path('admin')}}" class="btn btn-warning">Administration</a>
+				{% endif %}
 			</div>
 
-			<p class="lead fw-bold text-decoration-underline">
-				Vos dernieres demandes :</p>
-		</p>
+		</div>
 
-		<div class="count badge bg-info">
+	</div>
+
+
+	<div class="account-view">
+		<h1 class="display-4 text-center">Bienvenue sur votre compte</h1>
+		<p class="lead text-center">Bonjour,
+			{{app.user.firstName}}
+			votre demande concerne :</p>
+
+		<div class="row mt-5 mb-5">
+			<div class="col-md-4 d-flex justify-content-center align-items-center">
+				<a href="{{path('app_account_demande_materiel')}}">
+					<div class="rounded-circle overflow-hidden border border-dark" style="width: 200px; height: 200px;">
+						<img src="{{asset('images/materiel.jpg')}}" alt="Image ordinateur" class="w-100 h-100">
+					</div>
+					<h6 class="text-center mt-3">Materiel/logiciel</h6>
+				</a>
+			</div>
+
+			<div class="col-md-4 d-flex justify-content-center align-items-center">
+				<a href="{{path('app_account_demande_atrium')}}">
+					<div class="rounded-circle overflow-hidden border" style="width: 200px; height: 200px;">
+						<img src="{{asset('images/atrium.jpg')}}" alt="Image logo Atrium" class="w-100 h-100">
+					</div>
+					<h6 class="text-center mt-3">Atrium</h6>
+				</a>
+			</div>
+
+			<div class="col-md-4 d-flex justify-content-center align-items-center">
+				<a href="{{path('app_account_demande_autres')}}">
+					<div class="rounded-circle overflow-hidden border border-dark" style="width: 200px; height: 200px;">
+						<img src="{{asset('images/autres.jpg')}}" alt="Image autres" class="w-100 h-100">
+					</div>
+					<h6 class="text-center mt-3">Autres</h6>
+				</a>
+			</div>
+		</div>
+
+		<h4 class="text-decoration-underline">Vos dernieres demandes :</h4>
+
+
+		<div class=" mt-4 badge bg-info">
 			Vous avez
 			{{ demandes.getTotalItemCount }}
 			demandes au total.
@@ -57,9 +72,11 @@
 			<thead>
 				<tr>
 					<th scope="col">Salle</th>
+					<th scope="col">Date de création</th>
 					<th scope="col">Description</th>
 					<th scope="col">Rapport</th>
 					<th scope="col">Type de demande</th>
+					<th scope="col">Statut</th>
 
 				</tr>
 			</thead>
@@ -71,9 +88,22 @@
 								{{ d.salles is not null ? d.salles.name : 'Salle non spécifiée' }}
 							{% endif %}
 						</th>
+						{# ajouter un filtre a createdAt pour cette gérer cette error : Object of class DateTimeImmutable could not be converted to string #}
+						<td>{{ d.createdAt|date('d/m/Y') }}</td>
 						<td>{{ d.description }}</td>
 						<td>{{ d.rapport }}</td>
 						<td>{{ d.category.name }}</td>
+						<td>
+							{% if d.statut.name == 'En attente' %}
+								<span class="badge bg-warning">{{ d.statut.name }}</span>
+							{% elseif d.statut.name == 'En cours' %}
+								<span class="badge bg-primary">{{ d.statut.name }}</span>
+							{% elseif d.statut.name == 'Traitée' %}
+								<span class="badge bg-success">{{ d.statut.name }}</span>
+							{% else %}
+								{{ d.statut.name }}
+							{% endif %}
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -84,4 +114,24 @@
 		</div>
 
 	</div>
-</div>{% endblock %}
+
+
+	<div class="row mt-4">
+		<div class="col-md-6">
+			<p class="lead fw-bold">
+				Les différents statuts :</p>
+		</p>
+		<ul class="list-unstyled">
+			<li>
+				<span class="badge bg-warning">En attente</span>: La demande a été transmise au service informatique.
+			</li>
+			<li>
+				<span class="badge bg-primary">En cours</span>: La demande est en cours de traitement.
+			</li>
+			<li>
+				<span class="badge bg-success">Traitée</span>: La demande a été traitée et clôturée.
+			</li>
+		</ul>
+	</div>
+
+</div></div>{% endblock %}

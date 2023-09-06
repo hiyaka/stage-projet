@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Demandes;
 use App\Form\AutresType;
+use App\Repository\StatutRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,13 +14,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AutresDemandeController extends AbstractController
 {
     #[Route('/compte/autres', name: 'app_account_demande_autres')]
-    public function createAutres(Request $request, EntityManagerInterface $em): Response
+    public function createAutres(Request $request, EntityManagerInterface $em, StatutRepository $statutRepository): Response
     {
         $AutresDemande = new Demandes;
 
         // je récupère l'user connecté et la je l'assigne à la demande
         $user = $this->getUser();
         $AutresDemande->setUser($user);
+
+        // J'initialise le statut de la demande à "En attente"
+        $statut = $statutRepository->findOneBy(['name' => 'En attente']);
+        $AutresDemande->setStatut($statut);
 
         $form = $this->createForm(AutresType::class, $AutresDemande, [
             "validation_groups" => ["with-demandes-description"]

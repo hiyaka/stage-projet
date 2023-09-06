@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Controller\Admin;
+
+use App\Entity\Category;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+
+class CategoryCrudController extends AbstractCrudController
+{
+    public static function getEntityFqcn(): string
+    {
+        return Category::class;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('type')
+            ->setEntityLabelInPlural('types')
+            ->setPageTitle('index', 'Les 3 types de demandes');
+    }
+
+
+    public function configureFields(string $pageName): iterable
+    {
+        return [
+            IdField::new('id')
+                ->hideOnForm(),
+            TextField::new('name')
+                ->setLabel('Nom'),
+        ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        // Je veux qu'on ne puisse rien toucher
+        return $actions->remove('index', 'new')->remove('index', 'edit')->remove('index', 'delete');
+    }
+}

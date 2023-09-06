@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AutresType extends AbstractType
@@ -28,6 +29,16 @@ class AutresType extends AbstractType
                 'choice_label' => 'name',
 
             ])
+            // ->add('createdAt', DateType::class, [
+            //     'label' => 'Date de la demande :',
+            //     'placeholder' => [
+            //         'year' => 'Année',
+            //         'month' => 'Mois',
+            //         'day' => 'Jour',
+            //     ],
+            //     'widget' => 'choice',
+            //     'input'  => 'datetime_immutable'
+            // ])
             // ->add('user')
             // ->add('salles', EntityType::class, [
             //     'label' => 'La salle :',
