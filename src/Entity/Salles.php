@@ -47,6 +47,11 @@ class Salles
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function getBatiments(): ?Batiments
     {
         return $this->batiments;

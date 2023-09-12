@@ -35,19 +35,31 @@
 							<thead>
 								<tr>
 									<th scope="col">Description</th>
+									<th scope="col">Statut</th>
 								</tr>
 							</thead>
 							<tbody>
 								{% for d in historiqueDemandes %}
 									<tr class="table-active">
-										<td>{{ d.description }}</td>
+										<td>{{ d.description|raw }}</td>
+										<td>
+											{% if d.statut.name == 'En attente' %}
+												<span class="badge bg-warning">{{ d.statut.name }}</span>
+											{% elseif d.statut.name == 'En cours' %}
+												<span class="badge bg-primary">{{ d.statut.name }}</span>
+											{% elseif d.statut.name == 'Traitée' %}
+												<span class="badge bg-success">{{ d.statut.name }}</span>
+											{% else %}
+												{{ d.statut.name }}
+											{% endif %}
+										</td>
 									</tr>
 								{% endfor %}
 							</tbody>
 						</table>
 						{# <div class="navigation">
-																											{{ knp_pagination_render(historiqueDemandes) }}
-																											</div> #}
+																																													{{ knp_pagination_render(historiqueDemandes) }}
+																																													</div> #}
 					{% else %}
 						<p>Aucune demande trouvée</p>
 					{% endif %}

@@ -75,6 +75,7 @@
 					<th scope="col">Date de création</th>
 					<th scope="col">Description</th>
 					<th scope="col">Rapport</th>
+					<th scope="col">Images</th>
 					<th scope="col">Type de demande</th>
 					<th scope="col">Statut</th>
 
@@ -90,8 +91,14 @@
 						</th>
 						{# ajouter un filtre a createdAt pour cette gérer cette error : Object of class DateTimeImmutable could not be converted to string #}
 						<td>{{ d.createdAt|date('d/m/Y') }}</td>
-						<td>{{ d.description }}</td>
-						<td>{{ d.rapport }}</td>
+						{# le |raw échappe les balise html et affiche directement le contenu affiché en base de donnée  #}
+						<td>{{ d.description|raw }}</td>
+						<td>{{ d.rapport|raw }}</td>
+						<td>
+							{% if d.file is not empty %}
+								<a href="{{ vich_uploader_asset(d, 'imageFile') }}" download>Télécharger</a>
+							{% endif %}
+						</td>
 						<td>{{ d.category.name }}</td>
 						<td>
 							{% if d.statut.name == 'En attente' %}

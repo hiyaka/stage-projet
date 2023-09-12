@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DemandesRepository;
-use DateTimeImmutable;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert; // Use rajouté par moi meme
 
 #[ORM\Entity(repositoryClass: DemandesRepository::class)]
+#[Vich\Uploadable]
 class Demandes
 {
     #[ORM\Id]
@@ -43,6 +46,12 @@ class Demandes
     #[ORM\JoinColumn(nullable: false)]
     private ?Statut $statut = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $File = null;
+
+    #[Vich\UploadableField(mapping: 'demande_images', fileNameProperty: 'File')]
+    private ?File $imageFile = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -50,7 +59,7 @@ class Demandes
 
     // public function __toString()
     // {
-    //     return $this->category;
+    //     return $this->description;
     // }
 
     public function getId(): ?int
@@ -140,5 +149,33 @@ class Demandes
         $this->statut = $statut;
 
         return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->File;
+    }
+
+    public function setFile(?string $File): static
+    {
+        $this->File = $File;
+
+        return $this;
+    }
+
+    public function setImageFile(?File $File = null): void
+    {
+        $this->imageFile = $File;
+
+        if (null !== $File) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->createdAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
     }
 }

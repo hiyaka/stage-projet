@@ -19,17 +19,14 @@ body {
 footer {
     margin-top: auto;
     /* Le footer sera poussé vers le bas autant que nécessaire pour remplir l'espace disponible */
-    height: 100px;
-    /* Hauteur de 100px */
     background-color: #3a3a3a;
     /* Fond noir */
+    height: 300px;
 }
 
 .footer-text {
     color: white;
     /* Texte en blanc pour contraster avec le fond noir */
-    line-height: 100px;
-    /* Centre le texte verticalement dans le footer */
 }
 
 /* **********************ACCOUNT******************************* */

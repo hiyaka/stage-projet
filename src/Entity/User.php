@@ -44,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
 
-    #[Assert\EqualTo(propertyPath: 'password', message: "Les deux mots de passe ne sont pas indentiques")]
+    #[Assert\EqualTo(propertyPath: 'password', message: "Les deux mots de passe ne sont pas indentiques", groups: ['register'])]
     #[Assert\NotBlank(message: "Vous devez confimer le mot de passe")]
     public ?string $confirmPassword = null;
 
