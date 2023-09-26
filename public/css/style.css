@@ -21,7 +21,7 @@ footer {
     /* Le footer sera poussé vers le bas autant que nécessaire pour remplir l'espace disponible */
     background-color: #3a3a3a;
     /* Fond noir */
-    height: 300px;
+    height: 100px;
 }
 
 .footer-text {

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Demandes;
+use App\Entity\Motd;
 use App\Entity\User;
 use App\Entity\Salles;
 use App\Entity\Statut;
@@ -71,6 +72,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Liste des utilisateurs', 'fas fa-users', User::class);
         yield MenuItem::section('Le site');
         yield MenuItem::linkToRoute('Mon compte', 'fas fa-user', 'app_account');
+        yield MenuItem::linkToCrud('Message du jour', 'fa-solid fa-message', Motd::class);
 
         // yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
     }

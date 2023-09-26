@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\DemandesRepository;
+use App\Repository\MotdRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,8 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AccountController extends AbstractController
 {
     #[Route('/compte', name: 'app_account')]
-    public function index(Request $request, DemandesRepository $demandesRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request, DemandesRepository $demandesRepository, PaginatorInterface $paginator, MotdRepository $motdRepository): Response
     {
+
+        //récupération du message of the day
+        $motd = $motdRepository->findOneBy([]);
 
         // création de la pagination pour les demandes de l'utilisateur. Avec KnpPaginatorBundle.
         // J'ai retrouvé cette fonction dans le github du bundle "https://github.com/KnpLabs/KnpPaginatorBundle"
@@ -28,7 +32,8 @@ class AccountController extends AbstractController
         // dd($demandes);
 
         return $this->render('account/compte.html.twig', [
-            'demandes' => $demandes
+            'demandes' => $demandes,
+            'motd' => $motd
         ]);
     }
 }
